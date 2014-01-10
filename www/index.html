@@ -9,8 +9,11 @@
 
 		<script src="libs/jquery-1.10.1.js"></script>
 		<script src="js/fmeserver.js" type="text/javascript"></script>
-		<script src="js/polygoncontrol.js" type="text/javascript"></script>
-		<script src="js/maps-controller.js" type="text/javascript"></script>	
+
+		<!-- Map Control Scripts -->
+		<script src="js/google/polygoncontrol.js" type="text/javascript"></script>
+		<script src="js/google/maps-controller.js" type="text/javascript"></script>	
+
 		<script src="js/datadistribution.js" type="text/javascript"></script>
 		
 		  <!-- Bootstrap -->
@@ -51,7 +54,7 @@
 					</button>
 				</div>
 				<h1>Step 2: Set Parameters</h1>
-				<form id="fmeForm" name="fmeForm" onsubmit="return dataDistGoogle.orderData(this);" onchange="dataDistGoogle.updateQuery()">
+				<form id="fmeForm" name="fmeForm" onsubmit="return dataDist.orderData(this);" onchange="dataDist.updateQuery()">
 					<!-- Extra service-specific directives -->
 					<input type="hidden" name="opt_showresult" value="true">
 					<input type="hidden" name="opt_servicemode" value="sync">

@@ -2,14 +2,18 @@ var lon = -123.114166;
 var lat = 49.264549;
 
 $(document).ready(function() {
-	dataDistGoogle.init({
+  var query = document.location.search;
+  var mapService = query.split('=');
+  mapService = mapService[1];
+
+	dataDist.init({
     host : "fmepedia2014-safe-software.fmecloud.com",
     token : "b442e0b8ea9f85c1860ee85d8c6709d36ab40bb4"
   });
 });
 
 
-var dataDistGoogle = (function () {
+var dataDist = (function () {
 
   // privates
   var repository = 'Demos';
@@ -125,15 +129,18 @@ var dataDistGoogle = (function () {
       token = params.token;
       hostVisible = params.hostVisible;
 
-      googleMapsManager = new GoogleMapsManager();
-      polygonControl = new PolygonDrawTools(googleMapsManager.myGoogleMap);
+      //initialize map and drawing tools
+      //will eventually be different for each web map type
+      mapManager = new GoogleMapsManager();
+      polygonControl = new PolygonDrawTools(mapManager.myGoogleMap);
+
       myFMEServer = new FMEServer(host, token);
 
       //set up parameters on page
       myFMEServer.getParams(repository, workspaceName, buildParams);
 
       $('#geom').change(function(){
-        dataDistGoogle.updateQuery();
+        dataDist.updateQuery();
       });
     },
 
