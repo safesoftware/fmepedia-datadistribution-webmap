@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" >
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>Data Distribution Example: ArcGIS Maps</title>
+		
+        <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/1.6/js/dojo/dijit/themes/tundra/tundra.css">
+        <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=1.6"></script>
+		<script src="javascripts/arcgis/maps-controller.js" type="text/javascript"></script>
+		<script src="javascripts/libs/rest-manager.js" type="text/javascript"></script>
+		<script src="javascripts/libs/form-request-manager.js" type="text/javascript"></script>		
+		<script src="javascripts/arcgis/on-ready.js" type="text/javascript"></script>
+		<LINK REL="STYLESHEET" TYPE="text/css" HREF="css/reset.css">
+		<LINK REL="STYLESHEET" TYPE="text/css" HREF="css/ie.css">
+		<LINK REL="STYLESHEET" TYPE="text/css" HREF="css/index.css">
+	</head>
+	<body onload="initialize()">
+		<div id="mapwrapper">
+			<div id="mapArcGISServer" ></div>
+			<div id="request_form" >
+				<div id="draw-tools">
+					<h1>Step 1: Create Clipping Area</h1>
+					<button type="button" onclick="arcGisMapsManager.drawPolygon()">
+						Draw Polygon
+					</button>
+					<button type="button" onclick="arcGisMapsManager.clearPolygon()">
+						Clear
+					</button>
+				</div>
+				<h1>Step 2: Set Parameters</h1>
+				<form id="fmeForm" name="fmeForm" onsubmit="return formRequestManager.orderData(this);" onClick="formRequestManager.updateRequestUrl(this)">
+					<!-- Extra service-specific directives -->
+					<input type="hidden" name="opt_showresult" value="false">
+					<input type="hidden" name="opt_servicemode" value="sync">
+					<input type="hidden" name="opt_responseformat" value="json">
+					<input type="hidden" id="geom" name="GEOM" value="" />
+					<input type="submit" value="Request Data" >
+				</FORM>
+			</div>
+		</div>
+		<div id="footer">
+			<div id="results-panel">
+				<h1>Translation Results</h1>
+				<div id="results" ></div>
+			</div>
+			<div id="query-panel">
+				<h1>Query</h1>
+				<div id="query-panel-results" ></div>
+			</div>
+		</div>
+	</body>
+</html>
