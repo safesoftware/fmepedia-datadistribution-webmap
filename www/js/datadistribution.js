@@ -1,6 +1,14 @@
 var lon = -123.114166;
 var lat = 49.264549;
 
+$(document).load(function(){
+  var query = document.location.search;
+  var mapService = query.split('=');
+  if (mapService[1] == 'google'){
+
+  }
+})
+
 $(document).ready(function() {
   var query = document.location.search;
   var mapService = query.split('=');
@@ -131,9 +139,15 @@ var dataDist = (function () {
 
       //initialize map and drawing tools
       //will eventually be different for each web map type
-      mapManager = new GoogleMapsManager();
-      polygonControl = new PolygonDrawTools(mapManager.myGoogleMap);
-
+      var query = document.location.search;
+      var mapService = query.split('=');
+      if (mapService[1] == 'google'){
+        mapManager = new GoogleMapsManager();
+        polygonControl = new PolygonDrawTools(mapManager.myGoogleMap);
+      } 
+      if (mapService[1] == 'arcgis'){
+        
+      }
       myFMEServer = new FMEServer(host, token);
 
       //set up parameters on page
