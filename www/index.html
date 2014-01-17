@@ -5,8 +5,9 @@
 		<script type='text/javascript'>
 			var query = document.location.search;
 			var mapService = query.split('=');
+			mapService = mapService[1];
 
-			if (mapService[1] == 'google'){
+			if (mapService == 'google'){
 				var first = document.createElement('script');
 				first.setAttribute('type', 'text/javascript');
 				first.setAttribute("src", 'js/google/polygoncontrol.js');
@@ -16,7 +17,7 @@
 				second.setAttribute('src', 'js/google/maps-controller.js');
 				document.getElementsByTagName('head')[0].appendChild(second);
 			}
-			else if (mapService[1] == 'arcgis'){
+			else if (mapService == 'arcgis'){
         		var first = document.createElement('link');
         		first.setAttribute('rel', 'stylesheet');
         		first.setAttribute('type', 'text/css');
