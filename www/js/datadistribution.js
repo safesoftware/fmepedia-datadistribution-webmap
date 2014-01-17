@@ -1,19 +1,7 @@
 var lon = -123.114166;
 var lat = 49.264549;
 
-$(document).load(function(){
-  var query = document.location.search;
-  var mapService = query.split('=');
-  if (mapService[1] == 'google'){
-
-  }
-})
-
 $(document).ready(function() {
-  var query = document.location.search;
-  var mapService = query.split('=');
-  mapService = mapService[1];
-
 	dataDist.init({
     host : "fmepedia2014-safe-software.fmecloud.com",
     token : "fb1c3ee6828e6814c75512dd4770a02e73d913b8"
