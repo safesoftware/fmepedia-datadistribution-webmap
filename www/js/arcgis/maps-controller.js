@@ -20,26 +20,8 @@ function ArcGisMapsManager() {
 	dojo.connect(this.toolbar, "onDrawEnd", this._addToMap);
 	var tiled = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/ESRI_StreetMap_World_2D/MapServer");
 	this.arcgisMap.addLayer(tiled);
-
 }
 
-/**
- * Fired when the user clicks the draw polygon button
- */
-ArcGisMapsManager.prototype.drawPolygon = function() {
-	this.clearPolygon();
-	this.toolbar.activate(esri.toolbars.Draw.POLYGON);
-}
-/**
- * Called when the user clicks the Clear button
- */
-ArcGisMapsManager.prototype.clearPolygon = function() {
-
-	this.toolbar.deactivate(esri.toolbars.Draw.POLYGON);
-	this.arcgisMap.graphics.clear();
-	document.getElementById('geom').value = "";
-	formRequestManager.updateRequestUrl(document.forms["fmeForm"]);
-}
 /**
  * Add a geometry to map, handles different geometry types
  * @param {Object} geometry
@@ -73,13 +55,10 @@ ArcGisMapsManager.prototype.addToMap = function(geometry) {
 }
 
 /**
- * Builds up the XML which will be passed into the post request and used by FME Server to generate the
+ * Builds up the OGCWellKnownText string which will be passed into the post request and used by FME Server to generate the
  * bounding box.
  */
 ArcGisMapsManager.prototype.getPolygonCoordsText = function(coords) {
-
-	// print coords header
-	//document.getElementById("coords").value =  header;
 	textString = 'POLYGON((';
 
 	// loop to print coords
@@ -93,7 +72,5 @@ ArcGisMapsManager.prototype.getPolygonCoordsText = function(coords) {
 	textString = textString.substring(0,textString.length - 1);
 	textString += '))';
 
-	//formRequestManager.updateRequestUrl(document.forms["fmeForm"]);
 	return textString;
-
 }

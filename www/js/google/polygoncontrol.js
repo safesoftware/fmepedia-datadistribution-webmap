@@ -47,17 +47,6 @@ PolygonDrawTools.prototype.clearPolygon = function(){
     $('#geom').change();
 };
 
-PolygonDrawTools.prototype.getPolygonCoords = function(){
-    var me = this;
-    var vertices = me.myPolygon.getPath();
-    var vertList = "";
-    for(var i=0; i<vertices.getLength(); i++){
-        var xy = vertices.getAt(i);
-        vertList += " " + xy;
-    }
-
-    alert(vertList);
-};
 
 PolygonDrawTools.prototype.polyIsComplete = function(){
     var me = this;

@@ -18,7 +18,7 @@ var dataDist = (function () {
   var token;
 
   /**
-   * Run when the page laods. Callback from the FMEServer API. JSON returned from 
+   * Run when the page loads. Callback from the FMEServer API. JSON returned from 
    * the REST API parsed and a HTML published parameter form dynamically created.
    * @param  {JSON} json Returned from the Rest API callback
    */
@@ -38,7 +38,6 @@ var dataDist = (function () {
         var optionArray = paramArray[i].options.option;
         for (var x = 0; x < optionArray.length; x++){
           var option = $('<option />', {value: optionArray[x].value, text: optionArray[x].displayAlias});
-          //$('#' + paramArray[i].name).append(option);
           select.append(option);
         }
         section.append(title);
@@ -142,10 +141,7 @@ var dataDist = (function () {
           mapManager = new ArcGisMapsManager();
           polygonControl = new PolygonDrawTools(mapManager);
         }
-
         dojo.addOnLoad(initialize);
-
-        //polygonControl = new PolygonDrawTools(dojo.mapManager);
       }
       myFMEServer = new FMEServer(host, token);
 
@@ -167,7 +163,6 @@ var dataDist = (function () {
       var elem = formInfo.elements;
       for(var i = 0; i < elem.length; i++) {
         if(elem[i].type !== 'submit') {
-
           if(elem[i].type === "checkbox" && elem[i].checked) {
             params += elem[i].name + "=" + elem[i].value + "&";
           } else if(elem[i].type !== "checkbox") {
@@ -175,9 +170,7 @@ var dataDist = (function () {
           }
         }
       }
-
       myFMEServer.runDataDownload(repository, workspaceName, params, displayResult);
-      
       return false;
     },
 
