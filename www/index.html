@@ -2,25 +2,48 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" >
 	<head id='head'>
+		<script type='text/javascript'>
+			var query = document.location.search;
+			var mapService = query.split('=');
+
+			if (mapService[1] == 'google'){
+				var first = document.createElement('script');
+				first.setAttribute('type', 'text/javascript');
+				first.setAttribute("src", 'js/google/polygoncontrol.js');
+				document.getElementsByTagName("head")[0].appendChild(first);
+				var second = document.createElement('script');
+				second.setAttribute('type', 'text/javascript');
+				second.setAttribute('src', 'js/google/maps-controller.js');
+				document.getElementsByTagName('head')[0].appendChild(second);
+			}
+			else if (mapService[1] == 'arcgis'){
+        		var first = document.createElement('link');
+        		first.setAttribute('rel', 'stylesheet');
+        		first.setAttribute('type', 'text/css');
+        		first.setAttribute('href', 'http://serverapi.arcgisonline.com/jsapi/arcgis/1.6/js/dojo/dijit/themes/tundra/tundra.css');
+        		document.getElementsByTagName("head")[0].appendChild(first);
+        		var second = document.createElement('script');
+        		second.setAttribute('type', 'text/javascript');
+        		second.setAttribute('src', 'http://serverapi.arcgisonline.com/jsapi/arcgis/?v=1.6');
+        		document.getElementsByTagName("head")[0].appendChild(second);
+				var third = document.createElement('script');
+				third.setAttribute('type', 'text/javascript');
+				third.setAttribute("src", 'js/arcgis/polygoncontrol.js');
+				document.getElementsByTagName("head")[0].appendChild(third);
+				var fourth = document.createElement('script');
+				fourth.setAttribute('type', 'text/javascript');
+				fourth.setAttribute('src', 'js/arcgis/maps-controller.js');
+				document.getElementsByTagName('head')[0].appendChild(fourth);			
+			}
+		</script>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title>Data Distribution Example: Google Maps</title>
+
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0PV4qXA9_Kjb_0hMu5sYHeeAMW8X2ApU&sensor=false&libraries=drawing"></script>
 
 		<script src="libs/jquery-1.10.1.js"></script>
 		<script src="js/fmeserver.js" type="text/javascript"></script>
 
-		<!-- Map Control Scripts -->
-		<!--Google -->
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0PV4qXA9_Kjb_0hMu5sYHeeAMW8X2ApU&sensor=false&libraries=drawing"></script>
-		<script src="js/google/polygoncontrol.js" type="text/javascript"></script>
-		<script src="js/google/maps-controller.js" type="text/javascript"></script>
-		
-		<!-- ArcGIS -->
-		<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/1.6/js/dojo/dijit/themes/tundra/tundra.css">
-        <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=1.6"></script>
-		<script src="js/arcgis/maps-controller.js" type="text/javascript"></script>
-		<script src="js/arcgis/polygoncontrol.js" type="text/javascript"></script>
-
-		<!-- Main Page -->
 		<script src="js/datadistribution.js" type="text/javascript"></script>
 		
 		  <!-- Bootstrap -->
