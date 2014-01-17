@@ -23,8 +23,8 @@ function PolygonDrawTools(myGoogleMap){
         me.myPolygon = e;
         me.drawManager.setDrawingMode(null);
 
-        var xml = me.getPolygonCoordsXML();
-        $('#geom').attr('value', xml);
+        var geom = me.getPolygonCoordsText();
+        $('#geom').attr('value', geom);
         $('#geom').change();
     })
 
@@ -69,7 +69,7 @@ PolygonDrawTools.prototype.polyIsComplete = function(){
     }
 };
 
-PolygonDrawTools.prototype.getPolygonCoordsXML = function(){
+PolygonDrawTools.prototype.getPolygonCoordsText = function(){
     var me = this;
     if (me.polyIsComplete){
         var textString = 'POLYGON(('

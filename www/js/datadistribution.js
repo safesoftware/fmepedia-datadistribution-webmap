@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 	dataDist.init({
     host : "fmepedia2014-safe-software.fmecloud.com",
-    token : "b442e0b8ea9f85c1860ee85d8c6709d36ab40bb4"
+    token : "fb1c3ee6828e6814c75512dd4770a02e73d913b8"
   });
 });
 
@@ -146,7 +146,18 @@ var dataDist = (function () {
         polygonControl = new PolygonDrawTools(mapManager.myGoogleMap);
       } 
       if (mapService[1] == 'arcgis'){
-        
+        //copied from th arcgis on-ready.js
+        dojo.require("esri.map");
+        dojo.require("esri.toolbars.draw");
+
+        function initialize(){
+          mapManager = new ArcGisMapsManager();
+          polygonControl = new PolygonDrawTools(mapManager);
+        }
+
+        dojo.addOnLoad(initialize);
+
+        //polygonControl = new PolygonDrawTools(dojo.mapManager);
       }
       myFMEServer = new FMEServer(host, token);
 
