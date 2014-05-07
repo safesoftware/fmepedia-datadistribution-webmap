@@ -130,7 +130,7 @@ var dataDist = (function () {
       var mapService = query.split('=');
       if (mapService[1] == 'google'){
         mapManager = new GoogleMapsManager();
-        polygonControl = new PolygonDrawTools(mapManager.myGoogleMap);
+        polygonControl = new GoogleMapsPolygonDrawTools(mapManager.myGoogleMap);
       } 
       if (mapService[1] == 'arcgis'){
         //copied from th arcgis on-ready.js
@@ -139,7 +139,7 @@ var dataDist = (function () {
 
         function initialize(){
           mapManager = new ArcGisMapsManager();
-          polygonControl = new PolygonDrawTools(mapManager);
+          polygonControl = new ArcGISPolygonDrawTools(mapManager);
         }
         dojo.addOnLoad(initialize);
       }

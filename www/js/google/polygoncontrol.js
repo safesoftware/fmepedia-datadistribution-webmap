@@ -1,4 +1,4 @@
-function PolygonDrawTools(myGoogleMap){
+function GoogleMapsPolygonDrawTools(myGoogleMap){
     var me = this;
 
     me.drawManager = new google.maps.drawing.DrawingManager({
@@ -31,7 +31,7 @@ function PolygonDrawTools(myGoogleMap){
 
 };
 
-PolygonDrawTools.prototype.drawPolygon = function(){
+GoogleMapsPolygonDrawTools.prototype.drawPolygon = function(){
     var me = this;
     if(me.myPolygon){
         me.myPolygon.setMap(null);
@@ -39,7 +39,7 @@ PolygonDrawTools.prototype.drawPolygon = function(){
     me.drawManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
 };
 
-PolygonDrawTools.prototype.clearPolygon = function(){
+GoogleMapsPolygonDrawTools.prototype.clearPolygon = function(){
     var me = this;
     me.myPolygon.setMap(null);
     me.myPolygon = null;
@@ -48,7 +48,7 @@ PolygonDrawTools.prototype.clearPolygon = function(){
 };
 
 
-PolygonDrawTools.prototype.polyIsComplete = function(){
+GoogleMapsPolygonDrawTools.prototype.polyIsComplete = function(){
     var me = this;
     if (me.myPolygon){
         return true;
@@ -58,7 +58,7 @@ PolygonDrawTools.prototype.polyIsComplete = function(){
     }
 };
 
-PolygonDrawTools.prototype.getPolygonCoordsText = function(){
+GoogleMapsPolygonDrawTools.prototype.getPolygonCoordsText = function(){
     var me = this;
     if (me.polyIsComplete){
         var textString = 'POLYGON(('
