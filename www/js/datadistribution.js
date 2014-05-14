@@ -56,7 +56,7 @@ var dataDist = (function () {
    */
   function buildURL(formInfo){
     var str = '';
-    str = 'http://' + host + '/fmedatadownload/' + repository + '/' + workspaceName + '.fmw?';
+    str = host + '/fmedatadownload/' + repository + '/' + workspaceName + '.fmw?';
     var elem = formInfo[0];
     for(var i = 0; i < elem.length; i++) {
       if(elem[i].type !== 'submit') {
