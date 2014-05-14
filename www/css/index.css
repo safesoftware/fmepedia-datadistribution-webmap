@@ -208,9 +208,26 @@ h1 {
 }
 
 #fmeForm input[type="checkbox"] {
-	margin-top: 2px;
-	margin-bottom: 2px;
-	margin-right: 2px;
+	margin:0px 10px;
+	vertical-align: middle;
+	display: inline;
+	clear:left;
+}
+
+#parameters br{
+	clear:both;
+}
+
+#parameters div label {
+	display:inline-block;
+	vertical-align:middle;
+	margin: 5px 30px 5px 0px;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 16px;
+	position: inherit;
+	clear:left;
+	width:80%;
 }
 
 .input-customSize {
