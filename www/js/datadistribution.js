@@ -1,9 +1,10 @@
 var lon = -123.114166;
 var lat = 49.264549;
+var myFMEServer;
 
 $(document).ready(function() {
 	dataDist.init({
-    host : "fmepedia2014-safe-software.fmecloud.com",
+    host : "http://fmepedia2014-safe-software.fmecloud.com",
     token : "fb1c3ee6828e6814c75512dd4770a02e73d913b8"
   });
 });
@@ -13,7 +14,7 @@ var dataDist = (function () {
 
   // privates
   var repository = 'Demos';
-  var workspaceName = 'DataDownloadService';
+  var workspaceName = 'DataDownloadService.fmw';
   var host;
   var token;
 
@@ -24,44 +25,27 @@ var dataDist = (function () {
    */
   function buildParams(json){
 
-    var paramArray = json.parameter;
     var parameters = $('<div id="parameters" />');
+    parameters.insertBefore('#submit');
 
-    for (var i = 0; i < paramArray.length; i++){
+    // Generates standard form elelemts from
+    // the getWorkspaceParameters() return json object
+    myFMEServer.generateFormItems('parameters', json);
 
-      //populate drop-down options for choice-type parameters
-      if (paramArray[i].type == 'LOOKUP_CHOICE'){
-        //populate drop-down options on page
-        var section = $('<div />');
-        var title = paramArray[i].description + ':';
-        var select = $('<select class="input-customSize" name=' + paramArray[i].name +'/>');
-        var optionArray = paramArray[i].options.option;
-        for (var x = 0; x < optionArray.length; x++){
-          var option = $('<option />', {value: optionArray[x].value, text: optionArray[x].displayAlias});
-          select.append(option);
-        }
-        section.append(title);
-        section.append(select);
-        parameters.append(section);
-      }
+    // Add styling classes to all the select boxes
+    var selects = parameters.children('select');
+    for(var i = 0; i < selects.length; i++) {
+        selects[i].setAttribute('class', 'input-customSize');
+    }
 
-      //Creates the checkbox list.
-      if(paramArray[i].type == 'LISTBOX_ENCODED'){
-        var section = $('<div />');
-        var title = paramArray[i].description + ':';
-        var checkBoxes = $('<div id="' + paramArray[i].name + '" />');
-        var optionArray = paramArray[i].options.option;
-        for (var x = 0; x < optionArray.length; x++){
-          var box = $('<input type="checkbox" value="'+ optionArray[x].value + '" name="' + paramArray[i].name +'"><element>' + optionArray[x].value + '</element></>');
-          checkBoxes.append(box);
-          checkBoxes.append($('<br/>'));
-        }
-        section.append(title);
-        section.append(checkBoxes);
-        parameters.append(section);
+    // Remove the auto generated GEOM element and label
+    var inputs = parameters.children('input');
+    for(var i = 0; i < inputs.length; i++) {
+      if(inputs[i].name == 'GEOM') {
+        $(inputs[i]).prev().remove();
+        $(inputs[i]).remove();
       }
     }
-    parameters.insertBefore('#submit');
 
   }
 
@@ -72,7 +56,7 @@ var dataDist = (function () {
    */
   function buildURL(formInfo){
     var str = '';
-    str = 'http://' + host + '/fmedatadownload/' + repository + '/' + workspaceName + '.fmw?';
+    str = host + '/fmedatadownload/' + repository + '/' + workspaceName + '?';
     var elem = formInfo[0];
     for(var i = 0; i < elem.length; i++) {
       if(elem[i].type !== 'submit') {
@@ -95,18 +79,18 @@ var dataDist = (function () {
    * @param  {JSON} result JSON returned by the data download service call.
    */
   function displayResult(result){
-    var resultText = result.serviceResponse.fmeTransformationResult.fmeEngineResponse.statusMessage;
+    var resultText = result.serviceResponse.statusInfo.status;
     var resultUrl = '';
     var resultDiv = $('<div />');
 
-    if(result.serviceResponse.statusInfo.status == 'success'){
+    if(resultText == 'success'){
       resultUrl = result.serviceResponse.url;
-      resultDiv.append($('<h2>' + resultText + '</h2>'));
+      resultDiv.append($('<h2>' + resultText.toUpperCase() + '</h2>'));
       resultDiv.append($('<a href="' + resultUrl + '">' + 'Download Data </a>'));
     }
     else{
       resultDiv.append($('<h2>There was an error processing your request</h2>'));
-      resultDiv.append($('<h2>' + resultText + '</h2>'));
+      resultDiv.append($('<h2>' + result.serviceResponse.statusInfo.message + '</h2>'));
     }
 
     $('#results').html(resultDiv);
@@ -131,8 +115,7 @@ var dataDist = (function () {
       if (mapService[1] == 'google'){
         mapManager = new GoogleMapsManager();
         polygonControl = new GoogleMapsPolygonDrawTools(mapManager.myGoogleMap);
-      } 
-      if (mapService[1] == 'arcgis'){
+      } else {
         //copied from th arcgis on-ready.js
         dojo.require("esri.map");
         dojo.require("esri.toolbars.draw");
@@ -143,10 +126,14 @@ var dataDist = (function () {
         }
         dojo.addOnLoad(initialize);
       }
-      myFMEServer = new FMEServer(host, token);
+
+      myFMEServer = new FMEServer({
+        server : host,
+        token : token
+      });
 
       //set up parameters on page
-      myFMEServer.getParams(repository, workspaceName, buildParams);
+      myFMEServer.getWorkspaceParameters(repository, workspaceName, buildParams);
 
       $('#geom').change(function(){
         dataDist.updateQuery();
@@ -170,6 +157,7 @@ var dataDist = (function () {
           }
         }
       }
+      params = params.substr(0, params.length-1);
       myFMEServer.runDataDownload(repository, workspaceName, params, displayResult);
       return false;
     },
