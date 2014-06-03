@@ -234,6 +234,15 @@ h1 {
 	width: 95%;
 }
 
+.fmes-form-component{
+	display: block;
+	margin: 0px 0px 10px 0px;
+}
+
+.fmes-form-component select{
+	width: 95%;
+}
+
 /*
  * The bottom footer containing the translation results and
  * query.
