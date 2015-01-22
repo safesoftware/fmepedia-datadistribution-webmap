@@ -2,10 +2,9 @@ var lon = -123.114166;
 var lat = 49.264549;
 
 $(document).ready(function() {
-	dataDist.init({
-    host : "https://fmepedia2014-safe-software.fmecloud.com",
-    token : "fb1c3ee6828e6814c75512dd4770a02e73d913b8"
-  });
+	$.getJSON("http://demos.fmeserver.com.s3.amazonaws.com/server-demo-config.json", function(config) {
+		dataDist.init(config.initObject);
+	});
 });
 
 
@@ -97,7 +96,7 @@ var dataDist = (function () {
 
     init : function(params) {
       var self = this;
-      host = params.host;
+      host = params.server;
       token = params.token;
       hostVisible = params.hostVisible;
 
@@ -109,7 +108,7 @@ var dataDist = (function () {
         mapManager = new GoogleMapsManager();
         polygonControl = new GoogleMapsPolygonDrawTools(mapManager.myGoogleMap);
       } else {
-        //copied from th arcgis on-ready.js
+        //copied from the arcgis on-ready.js
         dojo.require("esri.map");
         dojo.require("esri.toolbars.draw");
 
