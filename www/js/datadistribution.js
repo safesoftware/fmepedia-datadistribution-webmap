@@ -111,6 +111,7 @@ var dataDist = (function () {
         //copied from the arcgis on-ready.js
         dojo.require("esri.map");
         dojo.require("esri.toolbars.draw");
+        dojo.require("esri.SpatialReference");
 
         function initialize(){
           mapManager = new ArcGisMapsManager();
