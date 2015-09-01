@@ -7,7 +7,7 @@
 function ArcGisMapsManager() {
   
   this.arcgisMap = new esri.Map("map_canvas", {
-		extent : new esri.geometry.Extent(-123.6, 49.11, -122.5, 49.4, new esri.SpatialReference(4326))
+		extent : new esri.geometry.Extent(-123.6, 49.11, -122.5, 49.4, new esri.SpatialReference(4326)),
     sliderStyle:"small",
     sliderOrientation:"vertical",
     sliderPosition: "bottom-right"
