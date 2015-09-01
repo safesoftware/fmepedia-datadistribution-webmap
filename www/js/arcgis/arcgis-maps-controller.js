@@ -6,15 +6,12 @@
 // 
 function ArcGisMapsManager() {
   
-  
-
-  
   this.arcgisMap = new esri.Map("map_canvas", {
-		extent : new esri.geometry.Extent(-123.6, 49.11, -122.5, 49.4),
-    sliderStyle:"small",
-    sliderOrientation:"vertical",
-    sliderPosition: "bottom-right",
-    basemap: "osm"
+		extent : new esri.geometry.Extent(-123.6, 49.11, -122.5, 49.4, new esri.SpatialReference(4326))
+    //sliderStyle:"small",
+    //sliderOrientation:"vertical",
+    //sliderPosition: "bottom-right",
+    //basemap: "streets"
 	});
 	var symbol = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
 	this.toolbar = new esri.toolbars.Draw(this.arcgisMap);
@@ -25,7 +22,7 @@ function ArcGisMapsManager() {
 	};
 	
 	dojo.connect(this.toolbar, "onDrawEnd", this._addToMap);
-	var tiled = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/ESRI_StreetMap_World_2D/MapServer");
+  var tiled = new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/ESRI_StreetMap_World_2D/MapServer");
 	this.arcgisMap.addLayer(tiled);
 }
 
