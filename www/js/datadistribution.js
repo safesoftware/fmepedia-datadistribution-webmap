@@ -1,18 +1,25 @@
-var lon = -123.114166;
+var lon = -123.114166;  //To Customize: Change the lat and lon to reflect the center point in your map.
 var lat = 49.264549;
 
 $(document).ready(function() {
 	$.getJSON("http://demos.fmeserver.com.s3.amazonaws.com/server-demo-config.json", function(config) {
 		dataDist.init(config.initObject);
 	});
+
+	//To Customize: Remove everything above this line and below $(document).ready(function() {
+	//and replace with this:
+	//  dataDist.init({
+  //      server: "http://fmeserverurl", //Change this to your FME server name
+  //      token: "a1b2c3d4e5f6a1b2c3d4e5f6"     });  //Change this to your FME Server Token
+	//  });
 });
 
 
 var dataDist = (function () {
 
   // privates
-  var repository = 'Demos';
-  var workspaceName = 'DataDownloadService.fmw';
+  var repository = 'Demos'; //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
+  var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
   var host;
   var token;
 
