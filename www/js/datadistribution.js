@@ -1,12 +1,13 @@
+if (location.protocol != 'https:')
+{
+	location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+}
+
+
 var lon = -123.114166;  //To Customize: Change the lat and lon to reflect the center point in your map.
 var lat = 49.264549;
 
 $(document).ready(function() {
-
-	if (location.protocol != 'https:')
-	{
-	  location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-	}
 
 	$.getJSON("https://demos.fmeserver.com/server-demo-config.json", function(config) {
 		dataDist.init(config.initObject);
