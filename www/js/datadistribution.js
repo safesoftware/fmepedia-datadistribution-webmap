@@ -9,9 +9,10 @@ var lat = 49.264549;
 
 $(document).ready(function() {
 
-	$.getJSON("https://demos.fmeserver.com/server-demo-config.json", function(config) {
-		dataDist.init(config.initObject);
-	});
+	dataDist.init({
+	      server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
+	      token: "568c604bc1f235bbe137c514e7c61a8436043070"     });  //Change this to your FME Server Token
+	  });
 
 	//To Customize: Remove everything above this line and below $(document).ready(function() {
 	//and replace with this:
@@ -19,7 +20,7 @@ $(document).ready(function() {
   //      server: "http://fmeserverurl", //Change this to your FME server name
   //      token: "a1b2c3d4e5f6a1b2c3d4e5f6"     });  //Change this to your FME Server Token
 	//  });
-});
+//});
 
 
 var dataDist = (function () {
