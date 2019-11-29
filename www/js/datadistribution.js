@@ -11,8 +11,9 @@ $(document).ready(function() {
 
 	dataDist.init({
 	      server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
-	      token: "568c604bc1f235bbe137c514e7c61a8436043070"     });  //Change this to your FME Server Token
-	  });
+	      //token: "568c604bc1f235bbe137c514e7c61a8436043070"     });  //Change this to your FME Server Token
+				token: "194506430b299190d7e5454ac891a98f0d0e44ba" });
+		});
 
 	//To Customize: Remove everything above this line and below $(document).ready(function() {
 	//and replace with this:
@@ -26,7 +27,7 @@ $(document).ready(function() {
 var dataDist = (function () {
 
   // privates
-  var repository = 'Demos'; //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
+  var repository = 'Laura'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
   var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
   var host;
   var token;
@@ -52,7 +53,7 @@ var dataDist = (function () {
     }
 
     // Remove the auto generated GEOM element and label
-    $("#parameters .GEOM").remove();
+    $("#parameters .AREA_OF_INTEREST_POLYGON").remove();
 
   }
 
@@ -86,27 +87,32 @@ var dataDist = (function () {
    * @param  {JSON} result JSON returned by the data download service call.
    */
    function displayResult(result){
+		 console.log(result);
      var resultText = result.serviceResponse.statusInfo.status;
      var featuresWritten = result.serviceResponse.fmeTransformationResult.fmeEngineResponse.numFeaturesOutput;
      var resultUrl = '';
-     var resultDiv = $('<div />');
 
      if(resultText == 'success'){
        if (featuresWritten != 0){
          resultUrl = result.serviceResponse.url;
-         resultDiv.append($('<h2>' + resultText.toUpperCase() + '</h2>'));
-         resultDiv.append($('<a href="' + resultUrl + '">' + 'Download Data </a>'));
+				 $('#successMessage').html('<p>Your request has been successfully processed. <br/ > Click this link to download your data: <a href="' + resultUrl + '"> Download Data </a>');
+				 $('#successModal').modal({show:true});
        }
        else {
-         resultDiv.append($('<h2>No output dataset was produced by FME, because no features were found in the selected area.</h2>'));
-       }
+				 $('#errorMessage').text('No output dataset was produced by FME, because no features were found in the selected area.');
+				 $('#errorModal').modal({
+					show: true
+				});
+			 }
      }
      else{
-       resultDiv.append($('<h2>There was an error processing your request</h2>'));
-       resultDiv.append($('<h2>' + result.serviceResponse.statusInfo.message + '</h2>'));
-     }
+			 $('#errorMessage').html('<p> The following error occurred while processing your request: <br/><br/>' + result.serviceResponse.statusInfo.message + '</p>');
+			 $('#errorModal').modal({
+				show: true
+			});
+		 }
 
-     $('#results').html(resultDiv);
+
    }
 
 
@@ -149,9 +155,7 @@ var dataDist = (function () {
       //set up parameters on page
       FMEServer.getWorkspaceParameters(repository, workspaceName, buildParams);
 
-      $('#geom').change(function(){
-        dataDist.updateQuery();
-      });
+
     },
 
     /**
@@ -174,14 +178,7 @@ var dataDist = (function () {
       params = params.substr(0, params.length-1);
       FMEServer.runDataDownload(repository, workspaceName, params, displayResult);
       return false;
-    },
-
-    /**
-     * Updates the URL text, called when a form item changes.
-     */
-    updateQuery : function(){
-      var queryStr = buildURL($('#fmeForm'));
-      $('#query-panel-results').text(queryStr);
     }
+
   };
 }());

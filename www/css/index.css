@@ -205,6 +205,7 @@ h1 {
 
 #query-panel {
 	height: 30%;
+  z-index: 100;
 	min-height: 200px;
 	-moz-border-radius: 8px;
 	border-radius: 8px;
@@ -223,6 +224,7 @@ h1 {
 	-moz-border-radius-topright: 8px;
 }
 #query-panel-results {
+  z-index: 100;
 	overflow: auto;
     height: 170px;
     padding-left: 5px;
@@ -236,4 +238,10 @@ h1 {
 .success h2{
 	color: #339900;
 	font-weight: bold;
+}
+
+
+#errorModal {
+   background-color: #f2dede;
+   border-color: #eed3d7;
 }
