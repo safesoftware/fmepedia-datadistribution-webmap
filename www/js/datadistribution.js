@@ -87,7 +87,6 @@ var dataDist = (function () {
    * @param  {JSON} result JSON returned by the data download service call.
    */
    function displayResult(result){
-		 console.log(result);
      var resultText = result.serviceResponse.statusInfo.status;
      var featuresWritten = result.serviceResponse.fmeTransformationResult.fmeEngineResponse.numFeaturesOutput;
      var resultUrl = '';
