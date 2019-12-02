@@ -17,5 +17,4 @@ ArcGISPolygonDrawTools.prototype.clearPolygon = function() {
 	this.arcgisMap.toolbar.deactivate(esri.toolbars.Draw.POLYGON);
 	this.arcgisMap.arcgisMap.graphics.clear();
 	document.getElementById('geom').value = "";
-	dataDist.updateQuery();
 }
