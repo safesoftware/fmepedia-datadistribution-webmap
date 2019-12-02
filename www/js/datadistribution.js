@@ -11,8 +11,7 @@ $(document).ready(function() {
 
 	dataDist.init({
 	      server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
-	      //token: "568c604bc1f235bbe137c514e7c61a8436043070"     });  //Change this to your FME Server Token
-				token: "194506430b299190d7e5454ac891a98f0d0e44ba" });
+	      token: "568c604bc1f235bbe137c514e7c61a8436043070"     });  //Change this to your FME Server Token
 		});
 
 	//To Customize: Remove everything above this line and below $(document).ready(function() {
@@ -27,7 +26,7 @@ $(document).ready(function() {
 var dataDist = (function () {
 
   // privates
-  var repository = 'Laura'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
+  var repository = 'Demos'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
   var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
   var host;
   var token;
