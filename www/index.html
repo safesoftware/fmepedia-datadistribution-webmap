@@ -12,8 +12,10 @@
 		<script type="text/javascript" src="js/google/maps-controller.js"></script>
 
 		<!--ArcGIS Maps Stuff -->
-		<LINK REL="STYLESHEET" TYPE="text/css" HREF="https://js.arcgis.com/3.14/esri/css/esri.css">
-		<script type="text/javascript" src="https://js.arcgis.com/3.14/"></script>
+		<!-- <LINK REL="STYLESHEET" TYPE="text/css" HREF="https://js.arcgis.com/3.14/esri/css/esri.css">
+		<script type="text/javascript" src="https://js.arcgis.com/3.14/"></script> -->
+    <LINK REL="STYLESHEET" TYPE="text/css" HREF="https://js.arcgis.com/4.15/esri/themes/light/main.css">
+		<script type="text/javascript" src="https://js.arcgis.com/4.15/"></script>
 		<script type="text/javascript" src="js/arcgis/arcgis-polygoncontrol.js"></script>
 		<script type="text/javascript" src="js/arcgis/arcgis-maps-controller.js"></script>
 
@@ -42,7 +44,7 @@
 				<div id="draw-tools">
 
 					<h1>Step 1: Create Clipping Area</h1>
-					<button type="button" onclick="polygonControl.drawPolygon()">
+					<button id="draw-button" type="button" onclick="polygonControl.drawPolygon()">
 						Draw Polygon
 					</button>
 					<button type="button" onclick="polygonControl.clearPolygon()">
