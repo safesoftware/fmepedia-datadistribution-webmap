@@ -10,8 +10,11 @@ var lat = 49.264549;
 $(document).ready(function() {
 
 	dataDist.init({
-	      server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
-	      token: "568c604bc1f235bbe137c514e7c61a8436043070"     });  //Change this to your FME Server Token
+	      //server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
+	      //token: "568c604bc1f235bbe137c514e7c61a8436043070"     });  //Change this to your FME Server Token
+				server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
+				token: "65ab7c85d8888631ee75b96ecea6b64eab103d28"     });  //Change this to your FME Server Token
+
 		});
 
 	//To Customize: Remove everything above this line and below $(document).ready(function() {
@@ -26,9 +29,11 @@ $(document).ready(function() {
 var dataDist = (function () {
 
   // privates
-  var repository = 'Demos'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
-  var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
-  var host;
+  //var repository = 'Demos'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
+  //var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
+	var repository = 'AlexTest'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
+	var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
+	var host;
   var token;
 
   /**
@@ -79,7 +84,6 @@ var dataDist = (function () {
     return str;
   }
 
-
   /**
    * Run on Submit click. Callback for the FMESERVER API.
    * from the translation which is displayed in a panel.
@@ -109,10 +113,7 @@ var dataDist = (function () {
 				show: true
 			});
 		 }
-
-
    }
-
 
   /**
    * ----------PUBLIC METHODS----------
@@ -139,8 +140,11 @@ var dataDist = (function () {
         "esri/views/MapView",
         "esri/views/draw/Draw",
         "esri/Graphic",
-        "esri/geometry/geometryEngine"
-      ], function(Map, MapView, Draw, Graphic, geometryEngine) {
+        "esri/geometry/geometryEngine",
+				"esri/widgets/Zoom",
+				"esri/geometry/projection",
+				"esri/geometry/SpatialReference"
+      ], function(Map, MapView, Draw, Graphic, geometryEngine, Zoom, projection, SpatialReference) {
         const map = new Map({
           basemap: "streets"
         });
@@ -149,12 +153,25 @@ var dataDist = (function () {
           container: "map_canvas",
           map: map,
           zoom: 12,
-          center: [lon, lat]
+          center: [lon, lat],
+					// spatialReference: {
+					// 	wkid:4326
+					// }
         });
 
         const draw = new Draw({
           view: view
         });
+
+				var zoom = new Zoom({
+  				view: view
+				});
+
+				var outSpatialReference = new SpatialReference ({
+					wkid: 4326
+				});
+
+				projection.load();
 
 				document.getElementById("draw-button").onclick = function() {
           view.graphics.removeAll();
@@ -183,30 +200,67 @@ var dataDist = (function () {
 					// when user double-clicks on the view or presses the "C" key
 					action.on("draw-complete", function (evt) {
 						createPolygonGraphic(evt.vertices);
+						var polygon = createPolygonGraphic(evt.vertices);
+						//var polygon2 = projection.project(polygon, outSpatialReference);
+						console.log(polygon);
+						console.log(projection.getTransformation(polygon.spatialReference, outSpatialReference));
+						document.getElementById('geom').value = getPolygonCoordsText(polygon.rings);
 					});
 				}
+
 				function createPolygonGraphic(vertices){
   				view.graphics.removeAll();
   				var polygon = {
     				type: "polygon", // autocasts as Polygon
     				rings: vertices,
     				spatialReference: view.spatialReference
+						// spatialReference: {
+						// 	wkid:4326
+						// }
   				};
 
   				var graphic = new Graphic({
     				geometry: polygon,
     				symbol: {
-      			type: "simple-fill", // autocasts as SimpleFillSymbol
-      			color: "purple",
-      			style: "solid",
-      			outline: {  // autocasts as SimpleLineSymbol
-        			color: "white",
-        			width: 1
-      			}
+      				type: "simple-fill", // autocasts as SimpleFillSymbol
+      				color: "purple",
+      				style: "solid",
+      				outline: {  // autocasts as SimpleLineSymbol
+        				color: "white",
+        				width: 1
+      				}
     				}
   				});
-  view.graphics.add(graphic);
-}
+
+  				view.graphics.add(graphic);
+					return polygon;
+				}
+
+
+				function getPolygonCoordsText(coords) {
+					//console.log(outSpatialReference);
+					//coords = projection.project(coords, outSpatialReference);
+					textString = 'POLYGON((';
+
+					// loop to print coords
+					for(var i = 0; i < (coords.length); i++) {
+						//coords[i] = projection.project(coords[i], outSpatialReference);
+						var lat = coords[i][1];
+						var longi = coords[i][0];
+						textString += longi + ' ';
+						textString += lat + ',';
+					}
+
+					textString = textString.substring(0,textString.length - 1);
+					textString += '))';
+
+					return textString;
+				}
+
+			document.getElementById("clear-button").onclick = function(vertices) {
+				view.graphics.removeAll();
+				document.getElementById('geom').value = "";
+			}
 				// require([
 	      //   "esri/widgets/Sketch",
 	      //   "esri/Map",
@@ -240,9 +294,8 @@ var dataDist = (function () {
 
 	        //view.ui.add(sketch, "top-right");
 					//view.ui.move("zoom", "bottom-right");
+					view.ui.add(zoom, "top-right");
 	      });
-
-
 
         //copied from the arcgis on-ready.js
         // dojo.require("esri.map");
@@ -285,6 +338,7 @@ var dataDist = (function () {
         }
       }
       params = params.substr(0, params.length-1);
+			console.log(params);
       FMEServer.runDataDownload(repository, workspaceName, params, displayResult);
       return false;
     }
