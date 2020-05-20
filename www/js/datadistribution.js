@@ -10,10 +10,10 @@ var lat = 49.264549;
 $(document).ready(function() {
 
 	dataDist.init({
-	      //server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
-	      //token: "568c604bc1f235bbe137c514e7c61a8436043070"     });  //Change this to your FME Server Token
-				server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
-				token: "65ab7c85d8888631ee75b96ecea6b64eab103d28"     });  //Change this to your FME Server Token
+	      server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
+	      token: "568c604bc1f235bbe137c514e7c61a8436043070"     });  //Change this to your FME Server Token
+				//server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
+				//token: "65ab7c85d8888631ee75b96ecea6b64eab103d28"     });  //Change this to your FME Server Token
 
 		});
 
@@ -29,10 +29,10 @@ $(document).ready(function() {
 var dataDist = (function () {
 
   // privates
-  //var repository = 'Demos'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
-  //var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
-	var repository = 'AlexTest'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
-	var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
+  var repository = 'Demos'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
+  var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
+	//var repository = 'AlexTest'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
+	//var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
 	var host;
   var token;
 
@@ -143,8 +143,9 @@ var dataDist = (function () {
         "esri/geometry/geometryEngine",
 				"esri/widgets/Zoom",
 				"esri/geometry/projection",
-				"esri/geometry/SpatialReference"
-      ], function(Map, MapView, Draw, Graphic, geometryEngine, Zoom, projection, SpatialReference) {
+				"esri/geometry/SpatialReference",
+				"esri/geometry/Polygon"
+      ], function(Map, MapView, Draw, Graphic, geometryEngine, Zoom, projection, SpatialReference, Polygon) {
         const map = new Map({
           basemap: "streets"
         });
@@ -154,9 +155,9 @@ var dataDist = (function () {
           map: map,
           zoom: 12,
           center: [lon, lat],
-					// spatialReference: {
+					//spatialReference: {
 					// 	wkid:4326
-					// }
+					//}
         });
 
         const draw = new Draw({
@@ -203,21 +204,22 @@ var dataDist = (function () {
 						var polygon = createPolygonGraphic(evt.vertices);
 						//var polygon2 = projection.project(polygon, outSpatialReference);
 						console.log(polygon);
+						console.log(polygon.getPoint(0,0).latitude);
 						console.log(projection.getTransformation(polygon.spatialReference, outSpatialReference));
-						document.getElementById('geom').value = getPolygonCoordsText(polygon.rings);
+						document.getElementById('geom').value = getPolygonCoordsText(polygon);
 					});
 				}
 
 				function createPolygonGraphic(vertices){
   				view.graphics.removeAll();
-  				var polygon = {
+  				var polygon = new Polygon ({
     				type: "polygon", // autocasts as Polygon
     				rings: vertices,
     				spatialReference: view.spatialReference
 						// spatialReference: {
 						// 	wkid:4326
 						// }
-  				};
+  				});
 
   				var graphic = new Graphic({
     				geometry: polygon,
@@ -240,13 +242,24 @@ var dataDist = (function () {
 				function getPolygonCoordsText(coords) {
 					//console.log(outSpatialReference);
 					//coords = projection.project(coords, outSpatialReference);
+					//var point = {
+					//	type: "point",
+					//	spatialReference: view.spatialReference
+					//};
+
 					textString = 'POLYGON((';
 
 					// loop to print coords
-					for(var i = 0; i < (coords.length); i++) {
-						//coords[i] = projection.project(coords[i], outSpatialReference);
-						var lat = coords[i][1];
-						var longi = coords[i][0];
+					for(var i = 0; i < (coords.rings[0].length); i++) {
+						//point.x = coords[i][0];
+						//point.y = coords[i][1];
+						//console.log(point);
+						//console.log(coords[i].longitude);
+						//var lat = coords[i][1];
+						//var longi = coords[i][0];
+						console.log(coords.getPoint(0,i));
+						var lat = coords.getPoint(0,i).latitude;
+						var longi = coords.getPoint(0,i).longitude;
 						textString += longi + ' ';
 						textString += lat + ',';
 					}
