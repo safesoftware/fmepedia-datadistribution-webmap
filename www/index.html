@@ -12,8 +12,6 @@
 		<script type="text/javascript" src="js/google/maps-controller.js"></script>
 
 		<!--ArcGIS Maps Stuff -->
-		<!-- <LINK REL="STYLESHEET" TYPE="text/css" HREF="https://js.arcgis.com/3.14/esri/css/esri.css">
-		<script type="text/javascript" src="https://js.arcgis.com/3.14/"></script> -->
     <LINK REL="STYLESHEET" TYPE="text/css" HREF="https://js.arcgis.com/4.15/esri/themes/light/main.css">
 		<script type="text/javascript" src="https://js.arcgis.com/4.15/"></script>
 		<script type="text/javascript" src="js/arcgis/arcgis-polygoncontrol.js"></script>
@@ -22,14 +20,14 @@
 		<script src="libs/jquery-1.10.1.js"></script>
 		<script src="https://api.fmeserver.com/js/v3/FMEServer.js" type="text/javascript"></script>
 
-		<script src="js/datadistribution.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/datadistribution.js"></script>
 
 		  <!-- Bootstrap -->
 
-  		<script src="libs/bootstrap/js/bootstrap.js"></script>
+  	<script src="libs/bootstrap/js/bootstrap.js"></script>
  		<link href="libs/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-  		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  		<link href="libs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<link href="libs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
 		<LINK REL="STYLESHEET" TYPE="text/css" HREF="css/reset.css">
 		<LINK REL="STYLESHEET" TYPE="text/css" HREF="css/ie.css">
@@ -71,16 +69,26 @@
     <!-- Modal -->
 <div id="errorModal" class="modal hide alert alert-block alert-error " tabindex="-1" aria-hidden="true">
       <div class="modal-body">
+          <svg class="sc-icon  sc-icon--miny" aria-hidden="true" id="errorIcon" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20px" height="20px">
+            <title>error</title>
+            <path stroke="#E7040F" fill="#E7040F" d="M42.511,44.647H7.487A4.489,4.489,0,0,1,3.612,37.9l-.011.021L21.111,7.593a4.488,4.488,0,0,1,7.756-.022l.011.022L46.4,37.916A4.439,4.439,0,0,1,47,40.16a4.486,4.486,0,0,1-4.487,4.487h0ZM25,8.341h-.019a1.469,1.469,0,0,0-1.275.74l0,.008L6.2,39.412a1.469,1.469,0,0,0-.2.748,1.5,1.5,0,0,0,1.5,1.5H42.514A1.5,1.5,0,0,0,43.806,39.4l0,.008L26.3,9.089a1.465,1.465,0,0,0-1.277-.748H25ZM23.161,36.194v-.008a1.876,1.876,0,0,1,.143-.717l0,.011a1.8,1.8,0,0,1,.383-.575h0a1.851,1.851,0,0,1,.563-.39l.011-.005a1.812,1.812,0,0,1,2,.393h0a1.9,1.9,0,0,1,.38.562l0,.012a1.854,1.854,0,0,1,0,1.44l0-.012a1.919,1.919,0,0,1-.385.576h0a1.714,1.714,0,0,1-.564.379l-.011,0a1.908,1.908,0,0,1-.714.136,1.934,1.934,0,0,1-.728-.141l.014,0a1.8,1.8,0,0,1-.576-.383h0a1.775,1.775,0,0,1-.38-.564l0-.012a1.812,1.812,0,0,1-.138-.7v-.012h0Zm3.2-17.181v7.456q0,1.171-.107,2.3t-.276,2.439H24.067q-.181-1.309-.277-2.439t-.1-2.3V19.013Z">
+            </path>
+          </svg>
         <p id="errorMessage">Error</p>
       </div>
-  <div class="text-right"><button class="btn" data-dismiss="modal" aria-hidden="true">Close</button></div>
+  <div class="text-right"><button data-dismiss="modal" aria-hidden="true">Close</button></div>
 </div>
 
 <div id="successModal" class="modal hide alert alert-block " tabindex="-1" aria-hidden="true">
       <div class="modal-body">
+        <svg class="sc-icon  sc-icon--h4 u-green" stroke="#74C698" fill="#74C698"aria-hidden="true" id="successIcon" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20px" height="20px">
+          <title>check-circle</title>
+          <path d="M23.6,3.04A21.995,21.995,0,1,0,47,25,22.11,22.11,0,0,0,23.6,3.04Zm-.78,41.13A19.132,19.132,0,1,1,44.15,25.15,19.188,19.188,0,0,1,22.82,44.17Z"/>
+          <path d="M20.5,36h-.011a1.5,1.5,0,0,1-1.128-.524l-6-7a1.5,1.5,0,1,1,2.278-1.952l4.878,5.69L34.375,16.508a1.5,1.5,0,0,1,2.25,1.984l-15,17A1.5,1.5,0,0,1,20.5,36Z"/>
+        </svg>
         <p id="successMessage">Success</p>
       </div>
-      <div class="text-right"><button class="btn" data-dismiss="modal" aria-hidden="true">Close</button></div>
+      <div class="text-right"><button data-dismiss="modal" aria-hidden="true">Close</button></div>
 </div>
 
 

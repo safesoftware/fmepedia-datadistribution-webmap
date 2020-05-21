@@ -185,7 +185,7 @@ h1 {
  * The bottom footer containing the translation results and
  * query.
  */
-#footer {
+/* #footer {
 	min-height: 28%;
 	clear: left;
 	width: 100%;
@@ -259,9 +259,9 @@ h1 {
 	overflow: auto;
     height: 170px;
     padding-left: 5px;
-}
+} */
 
-.error h2{
+/* .error h2{
 	color: red;
 	font-weight: bold;
 }
@@ -269,10 +269,50 @@ h1 {
 .success h2{
 	color: #339900;
 	font-weight: bold;
-}
-
+} */
 
 #errorModal {
-   background-color: #f2dede;
-   border-color: #eed3d7;
+	color: #535353;
+	background-color: #FFF5F6;
+	border: 1px solid #E7040F;
+	border-left-width: 4px;
+	border-radius: 0px;
+	text-align: left;
+}
+
+#errorModal button {
+	margin: 15px 10px 0px 23px;
+	width: 130px;
+	color: #E98300;
+	border: 1px solid #E98300;
+	border-radius: 2px;
+}
+
+#errorModal button:hover {
+	background-color: #ECA13F;
+	border: 1px solid #ECA13F;
+	color: white;
+}
+
+#successModal {
+	 color: #535353;
+   background-color: #F1F9F5;
+   border: 1px solid #74C698;
+	 border-left-width: 4px;
+	 border-radius: 0px;
+	 text-align: left;
+}
+
+#successModal button {
+	margin: 15px 10px 0px 23px;
+	width: 130px;
+	color: #E98300;
+	border: 1px solid #E98300;
+	border-radius: 2px;
+}
+
+#successModal button:hover {
+	background-color: #ECA13F;
+	border: 1px solid #ECA13F;
+	color: white;
 }

@@ -16,7 +16,7 @@ function GoogleMapsManager() {
 			]
 		},
 		zoomControlOptions: {
-			position: google.maps.ControlPosition.RIGHT_CENTER,
+			position: google.maps.ControlPosition.RIGHT_BOTTOM,
 			style: google.maps.ZoomControlStyle.SMALL
 		},
 		panControlOptions: {
@@ -27,4 +27,3 @@ function GoogleMapsManager() {
 	me.myGoogleMap = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
 };
-
