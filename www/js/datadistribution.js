@@ -150,7 +150,7 @@ var dataDist = (function () {
 
 						//creating map
 						const map = new Map({
-							basemap: "streets"
+							basemap: "streets-navigation-vector"
 						});
 
 						//creating map view
