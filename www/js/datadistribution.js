@@ -101,14 +101,23 @@ var dataDist = (function () {
 				 $('#successModal').modal({show:true});
        }
        else {
-				 $('#errorMessage').text('No output dataset was produced by FME, because no features were found in the selected area.');
+				 $('#errorMessage').html('<p>No output dataset was produced by FME, because no features were found in the selected area. <br/><br/> Note that you must draw the polygon within the boundary of Vancouver. </p>');
 				 $('#errorModal').modal({
 					show: true
 				});
 			 }
      }
      else{
-			 $('#errorMessage').html('<p> The following error occurred while processing your request: <br/><br/>' + result.serviceResponse.statusInfo.message + '</p>');
+			 var plainError = '';
+
+			 if(result.serviceResponse.statusInfo.message.search('LAYERS_TO_DOWNLOAD') >= 0) {
+				 plainError = '(ie. You must select at least one layer under \'Layers to Download\' before requesting data.)';
+			 }
+
+			 else {
+				 plainError = '(ie. You must create a clipping area using the \'Draw Polygon\' button before requesting data.)';
+			 }
+			 $('#errorMessage').html('<p> The following error occurred while processing your request: <br/><br/>' + result.serviceResponse.statusInfo.message + '<br/><br/>' + plainError + '</p>');
 			 $('#errorModal').modal({
 				show: true
 			});
@@ -145,8 +154,10 @@ var dataDist = (function () {
 						"esri/widgets/Zoom",
 						"esri/geometry/projection",
 						"esri/geometry/SpatialReference",
-						"esri/geometry/Polygon"
-					], function(Map, MapView, Draw, Graphic, geometryEngine, Zoom, projection, SpatialReference, Polygon) {
+						"esri/geometry/Polygon",
+						"esri/layers/GeoJSONLayer",
+						"esri/geometry/Extent"
+					], function(Map, MapView, Draw, Graphic, geometryEngine, Zoom, projection, SpatialReference, Polygon, GeoJSONLayer, Extent) {
 
 						//creating map
 						const map = new Map({
@@ -159,7 +170,51 @@ var dataDist = (function () {
 							map: map,
 							zoom: 12,
 							center: [lon, lat],
+							constraints: {
+								minZoom: 11
+							}
 						});
+
+						//function to limit the view to Vancouver, pulled from https://community.esri.com/thread/253923-how-to-keep-the-view-over-a-specific-area-eg-over-a-country
+						view.when(function() {
+							limitMapView(view);
+						});
+
+						function limitMapView(view) {
+							let initialExtent = view.extent;
+							let initialZoom = view.zoom;
+							view.watch('stationary', function(event) {
+								if (!event) {
+									return;
+								}
+								// If the center of the map has moved outside the initial extent,
+								// then move back to the initial map position (i.e. initial zoom and extent
+								let currentCenter = view.extent.center;
+								if (!initialExtent.contains(currentCenter)) {
+									view.goTo({
+										target: initialExtent,
+										zoom: initialZoom
+									});
+								}
+							});
+						}
+
+						var vanRenderer = {
+							type: "simple",  // autocasts as new SimpleRenderer()
+							symbol: {
+								type: "simple-fill",  // autocasts as new SimpleMarkerSymbol()
+								size: 10,
+								color: "grey"
+							}
+						};
+
+						var van = new GeoJSONLayer({
+							url: 'local-area-boundary-buffer.json',
+							renderer: vanRenderer,
+							opacity: 0.5
+						});
+
+						map.add(van);
 
 						//enabling drawing on map
 						const draw = new Draw({
@@ -302,7 +357,6 @@ var dataDist = (function () {
         }
       }
       params = params.substr(0, params.length-1);
-			console.log(params);
       FMEServer.runDataDownload(repository, workspaceName, params, displayResult);
       return false;
     }
