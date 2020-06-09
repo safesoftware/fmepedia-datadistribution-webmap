@@ -8,8 +8,8 @@ body {
 	margin: 0;
 	padding: 0;
 	line-height: 1.5em;
-	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-	color: black;
+	font-family: 'Source Sans Pro', sans-serif;
+	color: #545454;
 }
 
 b {
@@ -21,11 +21,16 @@ em {
 }
 
 h1 {
-	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-	color: white;
-	background-color: #E98300;
-	font-weight: bold;
+	font-family: 'Open Sans', sans-serif;
+	/* color: white;
+	background-color: #005B99; */
+	font-weight: 600;
+	font-size: 1.10em;
 	padding: 1px 5px 1px 5px;
+	border-bottom: 2px solid #F1F1F1;
+	text-align: center;
+	margin: 10px;
+	color: black;
 }
 
 /*
@@ -67,24 +72,23 @@ h1 {
  the parameters for the translation
 */
 #request_form {
-	top: 5px;
-	margin: 5px;
+	margin: 10px;
 	text-align: left;
 	position: absolute;
 	width: 350px; /*Width of left column*/
 	z-index: 100;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 	background-color: white;
   max-height:100%;
-	box-shadow: 10px 10px 5px #888;
+	box-shadow: 0 4px 8px 0 #888;
 }
 
 #request_form h1:first-child{
-	border-top-left-radius: 8px;
-	-moz-border-radius-topleft: 8px;
-	border-top-right-radius: 8px;
-	-moz-border-radius-topright: 8px;
+	border-top-left-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	border-top-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
 }
 
 #draw-tools {
@@ -94,6 +98,15 @@ h1 {
 #draw-tools button {
 	margin: 15px 10px 0px 23px;
 	width: 130px;
+	color: #E98300;
+	border: 1px solid #E98300;
+	border-radius: 2px;
+}
+
+#draw-tools button:hover {
+	background-color: #ECA13F;
+	border: 1px solid #ECA13F;
+	color: white;
 }
 
 #fmeForm {
@@ -101,10 +114,12 @@ h1 {
 	padding-top: 10px;
 	font-weight: bold;
 }
+
 #fmeForm element {
 	color: #202020;
 	font-weight: normal;
 }
+
 #fmeForm input {
 	padding-left: 8px;
 }
@@ -119,6 +134,22 @@ h1 {
 	vertical-align: middle;
 	display: inline;
 	clear:left;
+}
+
+#fmeForm input[type="submit"]{
+	/* margin: 15px 10px 0px 23px; */
+	/* width: 130px; */
+	color: white;
+	border-radius: 2px;
+	background-color: #E98300;
+	border: 1px solid #E98300;
+
+}
+
+#fmeForm input[type="submit"]:hover {
+	background-color: #ECA13F;
+	border: 1px solid #ECA13F;
+	color: white;
 }
 
 #parameters br{
@@ -154,7 +185,7 @@ h1 {
  * The bottom footer containing the translation results and
  * query.
  */
-#footer {
+/* #footer {
 	min-height: 28%;
 	clear: left;
 	width: 100%;
@@ -228,9 +259,9 @@ h1 {
 	overflow: auto;
     height: 170px;
     padding-left: 5px;
-}
+} */
 
-.error h2{
+/* .error h2{
 	color: red;
 	font-weight: bold;
 }
@@ -238,10 +269,50 @@ h1 {
 .success h2{
 	color: #339900;
 	font-weight: bold;
-}
-
+} */
 
 #errorModal {
-   background-color: #f2dede;
-   border-color: #eed3d7;
+	color: #535353;
+	background-color: #FFF5F6;
+	border: 1px solid #E7040F;
+	border-left-width: 4px;
+	border-radius: 0px;
+	text-align: left;
+}
+
+#errorModal button {
+	margin: 15px 10px 0px 23px;
+	width: 130px;
+	color: #E98300;
+	border: 1px solid #E98300;
+	border-radius: 2px;
+}
+
+#errorModal button:hover {
+	background-color: #ECA13F;
+	border: 1px solid #ECA13F;
+	color: white;
+}
+
+#successModal {
+	 color: #535353;
+   background-color: #F1F9F5;
+   border: 1px solid #74C698;
+	 border-left-width: 4px;
+	 border-radius: 0px;
+	 text-align: left;
+}
+
+#successModal button {
+	margin: 15px 10px 0px 23px;
+	width: 130px;
+	color: #E98300;
+	border: 1px solid #E98300;
+	border-radius: 2px;
+}
+
+#successModal button:hover {
+	background-color: #ECA13F;
+	border: 1px solid #ECA13F;
+	color: white;
 }

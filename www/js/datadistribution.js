@@ -12,6 +12,9 @@ $(document).ready(function() {
 	dataDist.init({
 	      server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
 	      token: "568c604bc1f235bbe137c514e7c61a8436043070"     });  //Change this to your FME Server Token
+				//server: "https://demos-safe-software.fmecloud.com", //Change this to your FME server name
+				//token: "65ab7c85d8888631ee75b96ecea6b64eab103d28"     });  //Change this to your FME Server Token
+
 		});
 
 	//To Customize: Remove everything above this line and below $(document).ready(function() {
@@ -28,7 +31,9 @@ var dataDist = (function () {
   // privates
   var repository = 'Demos'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
   var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
-  var host;
+	//var repository = 'AlexTest'; //switch to Demos when done //To Customize: Change this to the repository where DataDownloadService.fmw was uploaded
+	//var workspaceName = 'DataDownloadService.fmw';  //To Customize: Change this if you changed the file name
+	var host;
   var token;
 
   /**
@@ -79,7 +84,6 @@ var dataDist = (function () {
     return str;
   }
 
-
   /**
    * Run on Submit click. Callback for the FMESERVER API.
    * from the translation which is displayed in a panel.
@@ -97,22 +101,28 @@ var dataDist = (function () {
 				 $('#successModal').modal({show:true});
        }
        else {
-				 $('#errorMessage').text('No output dataset was produced by FME, because no features were found in the selected area.');
+				 $('#errorMessage').html('<p>No output dataset was produced by FME, because no features were found in the selected area. <br/><br/> Note that you must draw the polygon within the boundary of Vancouver. </p>');
 				 $('#errorModal').modal({
 					show: true
 				});
 			 }
      }
      else{
-			 $('#errorMessage').html('<p> The following error occurred while processing your request: <br/><br/>' + result.serviceResponse.statusInfo.message + '</p>');
+			 var plainError = '';
+
+			 if(result.serviceResponse.statusInfo.message.search('LAYERS_TO_DOWNLOAD') >= 0) {
+				 plainError = '(ie. You must select at least one layer under \'Layers to Download\' before requesting data.)';
+			 }
+
+			 else {
+				 plainError = '(ie. You must create a clipping area using the \'Draw Polygon\' button before requesting data.)';
+			 }
+			 $('#errorMessage').html('<p> The following error occurred while processing your request: <br/><br/>' + result.serviceResponse.statusInfo.message + '<br/><br/>' + plainError + '</p>');
 			 $('#errorModal').modal({
 				show: true
 			});
 		 }
-
-
    }
-
 
   /**
    * ----------PUBLIC METHODS----------
@@ -133,17 +143,10 @@ var dataDist = (function () {
         mapManager = new GoogleMapsManager();
         polygonControl = new GoogleMapsPolygonDrawTools(mapManager.myGoogleMap);
       } else {
-        //copied from the arcgis on-ready.js
-        dojo.require("esri.map");
-        dojo.require("esri.toolbars.draw");
-        dojo.require("esri.SpatialReference");
 
-        function initialize(){
-          mapManager = new ArcGisMapsManager();
-          polygonControl = new ArcGISPolygonDrawTools(mapManager);
-        }
-        dojo.addOnLoad(initialize);
-      }
+				mapManager = new ArcGisMapsManager();
+				polygonControl = new ArcGISPolygonDrawTools(mapManager);
+				}
 
       FMEServer.init({
         server : host,
